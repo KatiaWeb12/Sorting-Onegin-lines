@@ -1,0 +1,151 @@
+#include <TXLib.h>
+#include <stdio.h>
+#include <assert.h>
+#include <math.h>
+#include <string.h>
+#include <ctype.h>
+
+struct el_status {
+    size_t left;
+    size_t right;
+    };
+
+//Прототипы
+void print_massive(char* matrix[], size_t length);
+char* myStrdup(const char* str);
+void readText(const char* fileName, char* text[5]);
+void swapLines(char* value1, char* value2);
+int compareLeftToRight(const void* ptrLine1, const void* ptrLine2);
+int myStrcmp(const char str1[], const char str2[]);
+void bubbleSort(char* massive[], const size_t length, int (*compareLeftToRight)(const void*, const void*));
+
+int main(){
+    char* text[5] = {};
+    readText("test.txt", text);
+    print_massive(text, 5);
+
+    char* startText[5];
+
+    for (size_t i = 0; i < 5; i++)
+    {
+        startText[i] = text[i];
+    }
+
+}
+
+// Функция: выделение блока динамической памяти и возврат адреса новой строки
+char* myStrdup(const char* str){
+
+        void* extraMemory = malloc(strlen(str) + 1);
+        assert(extraMemory);
+
+        strcpy((char*) extraMemory, str);
+
+        return (char*)extraMemory;
+}
+
+// Функция: считывание строк файла
+void readText(const char* fileName, char* text[5]){
+
+    FILE* file = fopen(fileName, "r");
+    assert(file);
+
+    char buffer[30] = ""; // Временный хранитель данных
+
+    char symbol = '\0';
+    size_t i = 0;
+    size_t posLineElem = 0;
+
+    while (i < 5 && fread(&symbol, sizeof(char), 1, file) == 1) // Считываем по одному символу
+    {
+        buffer[posLineElem] = symbol; // Наполняем буфер
+
+        if (symbol == '\n')
+        {
+            buffer[posLineElem+1] = '\0';
+
+            text[i] = myStrdup(buffer); // Заполняем text указателями на строки
+
+            i++;
+            posLineElem = 0;
+        }
+        else posLineElem++;
+    }
+}
+
+
+
+// Функция: печать массива
+void print_massive(char* matrix[], size_t length){
+    for(size_t i = 0; i < length; i++){
+        printf("%s \n", matrix[i]);
+    }
+    putchar('\n');
+
+    return;
+}
+
+// Функция: Обмен указателей
+void swapLines(char** value1, char** value2){
+    char* temp = *value1;
+    *value1 = *value2;
+    *value2 = temp;
+
+    return;
+}
+
+// Функция: Сравнение строк без знаков препинания и пробелов
+int myStrcmp(const char str1[], const char str2[]){
+
+    assert(str1);
+    assert(str2);
+
+    size_t strInd1 = 0;
+    size_t strInd2 = 0;
+
+    while(!isalpha(str1[strInd1])) strInd1++;
+    while(!isalpha(str2[strInd2])) strInd2++;
+
+    while(str1[strInd1] == str2[strInd2])
+    {
+        if ((str1[strInd1] == '\0') || (str1[strInd2] == '\0')) return 0;
+        strInd1++;
+        strInd2++;
+        while(!isalpha(str1[strInd1])) strInd1++;
+        while(!isalpha(str2[strInd2])) strInd2++;
+    }
+    return str1[strInd1] - str2[strInd2];
+}
+
+// Функция: Определение порядка сортировки
+int compareLeftToRight(const void** ptrLine1, const void* ptrLine2){
+
+    char symbol1 = *(const char**)ptrLine1;
+    char symbol2 = *(const char**)ptrLine2;
+
+    return myStrcmp(str1[ptrLine1], str2[ptrLine2]);
+
+}
+
+// Функция: Сортировка пузырьком
+void bubbleSort(char* massive[], const size_t length, int (*compareLeftToRight)(const void*, const void*)){
+
+    assert(massive);
+
+    if(length == 0){
+        printf("%s", "An empty array has been passed");
+    }
+
+    for(size_t n_pass = 0; n_pass < length; n_pass++){
+            for(size_t i = 0; i < length - n_pass - 1; i++){
+                if(compareLeftToRight(&massive[i], &massive[i+1]) > 0){
+                    swapLines(&massive[i], &massive[i+1]);
+                }
+            }
+    }
+}
+
+
+
+
+
