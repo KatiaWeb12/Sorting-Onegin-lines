@@ -5,9 +5,10 @@
 #include <string.h>
 #include <ctype.h>
 
-struct el_status {
-    size_t left;
-    size_t right;
+struct files = {
+        char testFile[];
+        char oneginFile[];
+        char resultFile[];
     };
 
 //Прототипы
@@ -24,7 +25,15 @@ int main(){
     const size_t stringLength = 10000;
     char* text[stringCount] = {};
 
-    readText("onegin.txt", text, stringCount, stringLength);
+    //Задаём имена файлов
+    struct files usedFiles;
+
+    usedFiles.testFile = "used-files/test.txt";
+    usedFiles.oneginFile = "used-files/onegin.txt";
+    usedFiles.resultFile = "used-files/result.txt";
+
+    //Считываем текст из файла
+    readText(usedFiles.oneginFile, text, stringCount, stringLength);
 
     //Копия массива с указателями на строки
     char* startText[stringCount];
@@ -45,10 +54,10 @@ int main(){
     return 0;
 }
 
-// Функция: выделение блока динамической памяти и возврат адреса новой строки
+// Функция: выделение блока динамической памяти под одну строку и возврат адреса новой строки
 char* myStrdup(const char* str){
 
-        void* extraMemory = malloc(strlen(str) + 1);
+        void* extraMemory = calloc(strlen(str) + 1, sizeof(char));
         assert(extraMemory);
 
         strcpy((char*) extraMemory, str);
@@ -56,8 +65,8 @@ char* myStrdup(const char* str){
         return (char*)extraMemory;
 }
 
-// Функция: считывание строк файла
-void readText(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
+// Функция: считывание строк файла через несколько блоков памяти
+void readTextBy(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
 
     FILE* file = fopen(fileName, "r");
     assert(file);
