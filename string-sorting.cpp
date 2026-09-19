@@ -5,21 +5,16 @@
 #include <string.h>
 #include <ctype.h>
 
-// Структура для хранения имён файлов
+// Structure for storing filenames
 struct files = {
+        char logFile[];
         char testFile[];
         char oneginFile[];
         char resultFile[];
     };
 
-//Прототипы
-char* myStrdup(const char* str);
-void readTextBySeveralPartsOfMemory(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength);
-void writeText(const char* fileName, char* text[], size_t length, const char* reason);
-void swapPtrLines(char** value1, char** value2);
-int compareLeftToRight(const void* ptrLine1, const void* ptrLine2);
-int myStrcmp(const char* str1, const char* str2);
-void bubbleSort(char* massive[], const size_t length, int (*compareLeftToRight)(const void*, const void*));
+// Prototypes
+
 
 int main(){
 
@@ -27,13 +22,14 @@ int main(){
     const size_t stringLength = 10000;
     char* text[stringCount] = {};
 
-    // Задаём имена файлов
+    // Set the file names
     struct files usedFiles;
+    usedFiles.logFile = "log-files/log.txt";
     usedFiles.testFile = "used-files/test.txt";
     usedFiles.oneginFile = "used-files/onegin.txt";
     usedFiles.resultFile = "used-files/result.txt";
 
-    //Считываем текст из файла
+    // Read the text from the file
     readText(usedFiles.oneginFile, text, stringCount, stringLength);
 
     //Копия массива с указателями на строки
@@ -53,6 +49,23 @@ int main(){
     }
 
     return 0;
+}
+
+void writeTextToLogFileForDebugging(const char* fileName, char* text[], size_t length){
+    /*
+        Function: Writing text to a log-file for comfortable debugging
+        Returns: void
+    */
+
+    FILE* file = fopen(fileName, "a");
+    assert(file);
+
+    // Write debug information to file
+    fprintf(file, "%s\n", text);
+
+    fclose(file);
+
+    return;
 }
 
 // Функция: выделение блока динамической памяти под одну строку и возврат адреса новой строки
@@ -94,10 +107,10 @@ void writeTextToFile(const char* fileName, char* text[], size_t length, const ch
     FILE* file = fopen(fileName, "w");
     assert(file);
 
-    // Запись причины/заголовка
+    // Write of the reason/title
     fprintf(file, "%s\n", reason);
 
-    // Запись текста построчно
+    // Write text to a file line by line
     for (size_t i = 0; i < length; i++)
     {
         fprintf(file, "%s", text[i]);
