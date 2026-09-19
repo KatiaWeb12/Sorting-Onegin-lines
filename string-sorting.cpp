@@ -1,6 +1,7 @@
 #include <TXLib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <ctype.h>
@@ -13,14 +14,16 @@ struct files = {
         char resultFile[];
     };
 
+// A structure for storing information about a string
+stringInfo = {
+        size_t stringSize;
+        char* ptrString;
+    };
+
 // Prototypes
 
 
 int main(){
-
-    const size_t stringCount = 5323;
-    const size_t stringLength = 10000;
-    char* text[stringCount] = {};
 
     // Set the file names
     struct files usedFiles;
@@ -29,24 +32,15 @@ int main(){
     usedFiles.oneginFile = "used-files/onegin.txt";
     usedFiles.resultFile = "used-files/result.txt";
 
-    // Read the text from the file
-    readText(usedFiles.oneginFile, text, stringCount, stringLength);
+    // Variable to store the text of the entire poem
+    char* text[];
 
-    //Копия массива с указателями на строки
-    char* startText[stringCount];
-    for (size_t i = 0; i < stringCount; i++)
-    {
-        startText[i] = text[i];
-    }
+    // Read the text from the file
+    readText(usedFiles.oneginFile, text);
 
     bubbleSort(text, stringCount, &compareLeftToRight);
 
     writeText("result.txt", text, stringCount, "--------Part1. Bubble sorting.");
-
-    for (size_t i = 0; i < stringCount; i++)
-    {
-        free(text[i]);
-    }
 
     return 0;
 }
@@ -68,34 +62,34 @@ void writeTextToLogFileForDebugging(const char* fileName, char* text[], size_t l
     return;
 }
 
-// Функция: выделение блока динамической памяти под одну строку и возврат адреса новой строки
-char* myStrdup(const char* str){
+// // Функция: выделение блока динамической памяти под одну строку и возврат адреса новой строки
+// char* myStrdup(const char* str){
+//
+//         void* extraMemory = calloc(strlen(str) + 1, sizeof(char));
+//         assert(extraMemory);
+//
+//         strcpy((char*) extraMemory, str);
+//
+//         return (char*)extraMemory;
+// }
 
-        void* extraMemory = calloc(strlen(str) + 1, sizeof(char));
-        assert(extraMemory);
-
-        strcpy((char*) extraMemory, str);
-
-        return (char*)extraMemory;
-}
-
-// Функция: считывание строк файла через несколько блоков памяти
-void readTextBySeveralPartsOfMemory(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
-
-    FILE* file = fopen(fileName, "r");
-    assert(file);
-
-    char buffer[10000] = "";
-    size_t i = 0;
-
-    while (i < stringCount && fgets(buffer, sizeof(buffer), file) != NULL)
-    {
-        text[i] = myStrdup(buffer);
-        i++;
-    }
-
-    fclose(file);
-}
+// // Функция: считывание строк файла через несколько блоков памяти
+// void readTextBySeveralPartsOfMemory(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
+//
+//     FILE* file = fopen(fileName, "r");
+//     assert(file);
+//
+//     char buffer[10000] = "";
+//     size_t i = 0;
+//
+//     while (i < stringCount && fgets(buffer, sizeof(buffer), file) != NULL)
+//     {
+//         text[i] = myStrdup(buffer);
+//         i++;
+//     }
+//
+//     fclose(file);
+// }
 
 
 void writeTextToFile(const char* fileName, char* text[], size_t length, const char* reason){
@@ -121,8 +115,48 @@ void writeTextToFile(const char* fileName, char* text[], size_t length, const ch
     return;
 }
 
-// Функция: Обмен указателей
+char* myStrdup(const char* str){
+    /*
+        Function: Allocation of a dynamic memory block
+        Returns: (char*) the address of the allocated block in memory
+    */
+        void* memory = calloc(strlen(str) + 1, sizeof(char));
+        assert(memory);
+
+        strcpy((char*) memory, str);
+
+        return (char*)memory;
+}
+
+void readTextToSingleBuffer(const char* fileName, char* text[]){
+    /*
+        Function: Read text from a file and write it to a single buffer
+        Returns: void
+    */
+
+    FILE* file = fopen(fileName, "r");
+    assert(file);
+
+    // Get information about file
+    struct stat fileInfo;
+    stat(fileName, &fileInfo);
+    size_t fileSize = fileInfo.st_size;
+
+    // Allocate memory for recording
+    myStrdup(text);
+
+    // Read file and write information to text
+    fread(text, fileSize, 1, file);
+    text[fileSize] = '\0';
+
+    fclose(file);
+}
+
 void swapPtrLines(char** value1, char** value2){
+    /*
+        Function: Exchange of string pointers
+        Returns: void
+    */
     char* temp = *value1;
     *value1 = *value2;
     *value2 = temp;
