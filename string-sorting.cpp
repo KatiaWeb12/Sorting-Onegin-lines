@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 
+// Структура для хранения имён файлов
 struct files = {
         char testFile[];
         char oneginFile[];
@@ -13,7 +14,7 @@ struct files = {
 
 //Прототипы
 char* myStrdup(const char* str);
-void readText(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength);
+void readTextBySeveralPartsOfMemory(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength);
 void writeText(const char* fileName, char* text[], size_t length, const char* reason);
 void swapPtrLines(char** value1, char** value2);
 int compareLeftToRight(const void* ptrLine1, const void* ptrLine2);
@@ -21,13 +22,13 @@ int myStrcmp(const char* str1, const char* str2);
 void bubbleSort(char* massive[], const size_t length, int (*compareLeftToRight)(const void*, const void*));
 
 int main(){
+
     const size_t stringCount = 5323;
     const size_t stringLength = 10000;
     char* text[stringCount] = {};
 
-    //Задаём имена файлов
+    // Задаём имена файлов
     struct files usedFiles;
-
     usedFiles.testFile = "used-files/test.txt";
     usedFiles.oneginFile = "used-files/onegin.txt";
     usedFiles.resultFile = "used-files/result.txt";
@@ -66,7 +67,7 @@ char* myStrdup(const char* str){
 }
 
 // Функция: считывание строк файла через несколько блоков памяти
-void readTextBy(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
+void readTextBySeveralPartsOfMemory(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
 
     FILE* file = fopen(fileName, "r");
     assert(file);
@@ -81,16 +82,22 @@ void readTextBy(const char* fileName, char* text[], const size_t stringCount, co
     }
 
     fclose(file);
-
 }
 
-// Функция: вывод в файл
-void writeText(const char* fileName, char* text[], size_t length, const char* reason){
+
+void writeTextToFile(const char* fileName, char* text[], size_t length, const char* reason){
+    /*
+        Function: Writing text to a file
+        Returns: void
+    */
 
     FILE* file = fopen(fileName, "w");
     assert(file);
 
+    // Запись причины/заголовка
     fprintf(file, "%s\n", reason);
+
+    // Запись текста построчно
     for (size_t i = 0; i < length; i++)
     {
         fprintf(file, "%s", text[i]);
