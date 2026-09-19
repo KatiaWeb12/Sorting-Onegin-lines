@@ -23,7 +23,7 @@ struct stringInfo {
     };
 
 // Prototypes
-void writeTextToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason);
+void writeTextToLogFileForDebugging(const char* fileName, char* text, size_t length);
 void writeTextToFile(const char* fileName, char* text, size_t length, const char* reason);
 char* createMemoryBlock(size_t fileSize);
 void readTextIntoSingleBuffer(const char* fileName, char** text);
@@ -55,9 +55,12 @@ int main(){
     setStringsInfo(text, stringsInfoMassive, stringsCount);
 
 
-    // Standard QSORT from right to left
+    // Standart QSORT from right to left
     qsort(stringsInfoMassive, stringsCount, sizeof(stringInfo), compareRightToLeft);
-    writeTextToFile(usedFiles.resultFile, stringsInfoMassive, stringsCount, "------- Part 2. Standard qsort from right to left");
+
+     for(size_t i = 0; i < stringsCount; i++){
+        printf("%u %d %s\n", stringsInfoMassive[i].stringSize, stringsInfoMassive[i].stringPtr, stringsInfoMassive[i].stringPtr);
+    }
 
     //Memory deallocation
     free(text);
@@ -65,7 +68,7 @@ int main(){
     return 0;
 }
 
-void writeTextToLogFileForDebugging(const char* fileName, char* text, size_t length){
+void writeTextToLogFileForDebugging(const char* fileName, stringInfo* , size_t length){
     /*
         Function: Writing text to a log-file for comfortable debugging
         Returns: void
@@ -82,7 +85,7 @@ void writeTextToLogFileForDebugging(const char* fileName, char* text, size_t len
     return;
 }
 
-void writeTextToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason){
+void writeTextToFile(const char* fileName, char* text, size_t length, const char* reason){
     /*
         Function: Writing text to a file
         Returns: void
@@ -97,7 +100,7 @@ void writeTextToFile(const char* fileName, stringInfo* stringsInfoMassive, size_
     // Write text to a file line by line
     for (size_t i = 0; i < length; i++)
     {
-        fprintf(file, "%s\n", stringsInfoMassive[i].stringPtr);
+        fprintf(file, "%s", text[i]);
     }
 
     fclose(file);
@@ -208,7 +211,7 @@ void swapLinesInfo(stringInfo* strInfo1, stringInfo* strInfo2){
     return;
 }
 
-int compareLeftToRight(const void* ptrStringInfo1, const void* ptrStringInfo2){
+int compareLeftToRight(const void* ptrLine1, const void* ptrLine2){
     /*
         Function: Compare strings without punctuation and spaces from left to right
         Returns: (int) =0 if the strings are equal
@@ -216,18 +219,12 @@ int compareLeftToRight(const void* ptrStringInfo1, const void* ptrStringInfo2){
                        <0 if the second is greater than the first
     */
 
-    assert(ptrStringInfo1);
-    assert(ptrStringInfo2);
+    assert(ptrLine1);
+    assert(ptrLine2);
 
     // Get string values
-    const stringInfo* strInfo1 = (const stringInfo*)ptrStringInfo1;
-    const stringInfo* strInfo2 = (const stringInfo*)ptrStringInfo2;
-
-    assert(strInfo1);
-    assert(strInfo2);
-
-    const char* str1 = (*strInfo1).stringPtr;
-    const char* str2 = (*strInfo2).stringPtr;
+    const char* str1 = *(const char**)ptrLine1;
+    const char* str2 = *(const char**)ptrLine2;
 
     assert(str1);
     assert(str2);
