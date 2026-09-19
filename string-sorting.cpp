@@ -15,7 +15,7 @@ struct files = {
     };
 
 // A structure for storing information about a string
-stringInfo = {
+struct stringInfo = {
         size_t stringSize;
         char* ptrString;
     };
@@ -62,36 +62,6 @@ void writeTextToLogFileForDebugging(const char* fileName, char* text[], size_t l
     return;
 }
 
-// // Функция: выделение блока динамической памяти под одну строку и возврат адреса новой строки
-// char* myStrdup(const char* str){
-//
-//         void* extraMemory = calloc(strlen(str) + 1, sizeof(char));
-//         assert(extraMemory);
-//
-//         strcpy((char*) extraMemory, str);
-//
-//         return (char*)extraMemory;
-// }
-
-// // Функция: считывание строк файла через несколько блоков памяти
-// void readTextBySeveralPartsOfMemory(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
-//
-//     FILE* file = fopen(fileName, "r");
-//     assert(file);
-//
-//     char buffer[10000] = "";
-//     size_t i = 0;
-//
-//     while (i < stringCount && fgets(buffer, sizeof(buffer), file) != NULL)
-//     {
-//         text[i] = myStrdup(buffer);
-//         i++;
-//     }
-//
-//     fclose(file);
-// }
-
-
 void writeTextToFile(const char* fileName, char* text[], size_t length, const char* reason){
     /*
         Function: Writing text to a file
@@ -117,7 +87,7 @@ void writeTextToFile(const char* fileName, char* text[], size_t length, const ch
 
 char* myStrdup(const char* str){
     /*
-        Function: Allocation of a dynamic memory block
+        Function: Allocate of a dynamic memory block
         Returns: (char*) the address of the allocated block in memory
     */
         void* memory = calloc(strlen(str) + 1, sizeof(char));
@@ -152,27 +122,43 @@ void readTextToSingleBuffer(const char* fileName, char* text[]){
     fclose(file);
 }
 
-void swapPtrLines(char** value1, char** value2){
+void swapLinesInfo(stringInfo* strInfo1, stringInfo* strInfo2){
     /*
-        Function: Exchange of string pointers
+        Function: Exchange of stringInfo-structures
         Returns: void
     */
-    char* temp = *value1;
-    *value1 = *value2;
-    *value2 = temp;
+
+    // Use temporary variable to swapping
+    char* temp = *strInfo1;
+    *strInfo1 = *strInfo2;
+    *strInfo2 = temp;
 
     return;
 }
 
-// Функция: Сравнение строк без знаков препинания и пробелов
-int myStrcmp(const char* str1, const char* str2){
+int compareLeftToRight(const void* ptrLine1, const void* ptrLine2){
+    /*
+        Function: Compare strings without punctuation and spaces from left to right
+        Returns: (int) =0 if the strings are equal
+                       >0 if the first is greater than the second
+                       <0 if the second is greater than the first
+    */
+
+    assert(ptrLine1);
+    assert(ptrLine2);
+
+    // Get string values
+    const char* str1 = *(const char**)ptrLine1;
+    const char* str2 = *(const char**)ptrLine2;
 
     assert(str1);
     assert(str2);
 
+    // Indexes of string symbols
     size_t strInd1 = 0;
     size_t strInd2 = 0;
 
+    // Search for not punctuation and spaces in strings
     while(!isalpha(str1[strInd1]) && str1[strInd1] != '\0') strInd1++;
     while(!isalpha(str2[strInd2]) && str2[strInd2] != '\0') strInd2++;
 
@@ -181,46 +167,63 @@ int myStrcmp(const char* str1, const char* str2){
         if (str1[strInd1] != str2[strInd2]) return str1[strInd1] - str2[strInd2];
         strInd1++;
         strInd2++;
+        // Search for next not punctuation and spaces in strings
         while(!isalpha(str1[strInd1]) && str1[strInd1] != '\0') strInd1++;
         while(!isalpha(str2[strInd2]) && str2[strInd2] != '\0') strInd2++;
     }
 
     if (str1[strInd1] == '\0' && str2[strInd2] == '\0') return 0;
     if (str1[strInd1] == '\0') return -1;
-
     return 1;
-
 
 }
 
-// Функция: Определение порядка сортировки
-int compareLeftToRight(const void* ptrLine1, const void* ptrLine2){
+int compareRightToLeft(const void* ptrLine1, const void* ptrLine2){
+    /*
+        Function: Compare strings without punctuation and spaces from right to left
+        Returns: (int) =0 if the strings are equal
+                       >0 if the first is greater than the second
+                       <0 if the second is greater than the first
+    */
 
+    assert(ptrLine1);
+    assert(ptrLine2);
+
+    // Get string values
     const char* str1 = *(const char**)ptrLine1;
     const char* str2 = *(const char**)ptrLine2;
 
-    return myStrcmp(str1, str2);
+    assert(str1);
+    assert(str2);
+
+    // Indexes of string symbols
+    size_t strInd1 = 0;
+    size_t strInd2 = 0;
+
+    // Reach the end of the strins
+    while(str1[strInd1] != '\0') strInd1++;
+    while(str1[strInd2] != '\0') strInd2++;
+
+    // Search for not punctuation and spaces in strings
+    while(!isalpha(str1[strInd1]) && strInd1 >= 0) strInd1--;
+    while(!isalpha(str2[strInd2]) && strInd2 >= 0) strInd2--;
+
+    while(strInd1 >= 0 && strInd2 >= 0)
+    {
+        if (str1[strInd1] != str2[strInd2]) return str1[strInd1] - str2[strInd2];
+        strInd1--;
+        strInd2--;
+        // Search for next not punctuation and spaces in strings
+        while(!isalpha(str1[strInd1]) && strInd1 >= 0) strInd1--;
+        while(!isalpha(str2[strInd2]) && strInd2 >= 0) strInd2--;
+    }
+
+    if (strInd1 < 0 && strInd2 < 0) return 0;
+    if (strInd1 < 0) return -1;
+    return 1;
 
 }
 
-// Функция: Сортировка пузырьком
-void bubbleSort(char* massive[], const size_t length, int (*compare)(const void*, const void*)){
-
-    assert(massive);
-
-    if(length == 0){
-        printf("%s", "An empty array has been passed");
-        return;
-    }
-
-    for(size_t nPass = 0; nPass < length; nPass++){
-            for(size_t i = 0; i < length - nPass - 1; i++){
-                if(compare(&massive[i], &massive[i+1]) > 0){
-                    swapPtrLines(&massive[i], &massive[i+1]);
-                }
-            }
-    }
-}
 
 
 

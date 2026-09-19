@@ -1,0 +1,28 @@
+// // Функция: выделение блока динамической памяти под одну строку и возврат адреса новой строки
+// char* myStrdup(const char* str){
+//
+//         void* extraMemory = calloc(strlen(str) + 1, sizeof(char));
+//         assert(extraMemory);
+//
+//         strcpy((char*) extraMemory, str);
+//
+//         return (char*)extraMemory;
+// }
+
+// // Функция: считывание строк файла через несколько блоков памяти
+// void readTextBySeveralPartsOfMemory(const char* fileName, char* text[], const size_t stringCount, const size_t stringLength){
+//
+//     FILE* file = fopen(fileName, "r");
+//     assert(file);
+//
+//     char buffer[10000] = "";
+//     size_t i = 0;
+//
+//     while (i < stringCount && fgets(buffer, sizeof(buffer), file) != NULL)
+//     {
+//         text[i] = myStrdup(buffer);
+//         i++;
+//     }
+//
+//     fclose(file);
+// }
