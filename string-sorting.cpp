@@ -22,9 +22,16 @@ struct stringInfo {
         char* stringPtr;
     };
 
+// Status of element in partition
+struct elStatus {
+    size_t left;
+    size_t right;
+    };
+
 // Prototypes
-void writeTextToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason);
-void writeTextToFile(const char* fileName, char* text, size_t length, const char* reason);
+void cleanFile(const char* fileName);
+void writeTextToFile(const char* fileName, char* text, size_t stringCount, const char* reason);
+void writeStringsToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason);
 char* createMemoryBlock(size_t fileSize);
 void readTextIntoSingleBuffer(const char* fileName, char** text);
 void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], size_t stringCount);
@@ -33,6 +40,10 @@ void setStringsInfo(char* text, stringInfo stringsInfoMassive[], size_t stringsC
 void swapLinesInfo(stringInfo* strInfo1, stringInfo* strInfo2);
 int compareLeftToRight(const void* ptrLine1, const void* ptrLine2);
 int compareRightToLeft(const void* ptrLine1, const void* ptrLine2);
+elStatus partition(stringInfo* massive, size_t length, size_t left,
+                        size_t right, const size_t middle, int (*compare)(const void*, const void*));
+void quickSort(stringInfo* massive, size_t length, const size_t leftEdge, const size_t rightEdge,
+                            int (*compare)(const void*, const void*));
 
 int main(){
 
@@ -47,17 +58,27 @@ int main(){
     char* text = NULL;
 
     // Variable to store information about every string in poem
-    const size_t stringsCount = 5;
+    const size_t stringsCount = 5323;
     stringInfo stringsInfoMassive[stringsCount] = {};
 
+    // Clean resultFile
+    cleanFile(usedFiles.resultFile);
+
+
     // Read the text from the file and set information about it
-    readTextIntoSingleBuffer(usedFiles.testFile, &text);
+    readTextIntoSingleBuffer(usedFiles.oneginFile, &text);
     setStringsInfo(text, stringsInfoMassive, stringsCount);
 
+    // My QuickSort from left to right
+    quickSort(stringsInfoMassive, stringsCount, 0, stringsCount-1, compareLeftToRight);
+    writeStringsToFile(usedFiles.resultFile, stringsInfoMassive, stringsCount, "------- Part 1. My QuickSort from left to right");
 
     // Standard QSORT from right to left
     qsort(stringsInfoMassive, stringsCount, sizeof(stringInfo), compareRightToLeft);
-    writeTextToFile(usedFiles.resultFile, stringsInfoMassive, stringsCount, "------- Part 2. Standard qsort from right to left");
+    writeStringsToFile(usedFiles.resultFile, stringsInfoMassive, stringsCount, "------- Part 2. Standard qsort from right to left");
+
+    // The original text of the poem
+    writeTextToFile(usedFiles.resultFile, text, stringsCount, "------- Part 3. The original text of the poem");
 
     //Memory deallocation
     free(text);
@@ -65,34 +86,63 @@ int main(){
     return 0;
 }
 
-void writeTextToLogFileForDebugging(const char* fileName, char* text, size_t length){
+void cleanFile(const char* fileName){
     /*
-        Function: Writing text to a log-file for comfortable debugging
+        Function: Clean file
+        Returns: void
+    */
+    FILE* file = fopen(fileName, "w");
+    assert(file);
+    fclose(file);
+}
+
+void writeTextToFile(const char* fileName, char* text, size_t stringCount, const char* reason){
+    /*
+        Function: Writing text to a file
         Returns: void
     */
 
     FILE* file = fopen(fileName, "a");
     assert(file);
 
-    // Write debug information to file
-    fprintf(file, "%s\n", text);
+    // Write of the reason/title
+    fprintf(file, "\n%s\n\n", reason);
+
+    /*
+        Function: Record pointer about each line
+        Returns: void
+    */
+
+    size_t stringIndex = 0;
+    char* currentPtr = text;
+
+    while(currentPtr != NULL && stringIndex < stringCount){
+        fprintf(file, "%s\n", currentPtr);;
+        stringIndex++;
+
+        // Get new string pointer
+        char* newString = strchr(currentPtr, '\0');
+        if(newString == NULL) break;
+
+        currentPtr = newString + 1;
+    }
 
     fclose(file);
 
     return;
 }
 
-void writeTextToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason){
+void writeStringsToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason){
     /*
-        Function: Writing text to a file
+        Function: Writing strings to a file
         Returns: void
     */
 
-    FILE* file = fopen(fileName, "w");
+    FILE* file = fopen(fileName, "a");
     assert(file);
 
     // Write of the reason/title
-    fprintf(file, "%s\n", reason);
+    fprintf(file, "\n%s\n\n", reason);
 
     // Write text to a file line by line
     for (size_t i = 0; i < length; i++)
@@ -282,12 +332,12 @@ int compareRightToLeft(const void* ptrStringInfo1, const void* ptrStringInfo2){
     int strInd2 = 0;
 
     // Reach the end of the strins
-    while(str1[strInd1] != '\0') strInd1++;
-    while(str1[strInd2] != '\0') strInd2++;
+    while(str1[strInd1+1] != '\0') strInd1++;
+    while(str2[strInd2+1] != '\0') strInd2++;
 
     // Search for not punctuation and spaces in strings
-    while(!isalpha(str1[strInd1]) && strInd1 >= 0) strInd1--;
-    while(!isalpha(str2[strInd2]) && strInd2 >= 0) strInd2--;
+    while(!isalpha(str1[strInd1]) && strInd1 > 0) strInd1--;
+    while(!isalpha(str2[strInd2]) && strInd2 > 0) strInd2--;
 
     while(strInd1 >= 0 && strInd2 >= 0)
     {
@@ -295,8 +345,8 @@ int compareRightToLeft(const void* ptrStringInfo1, const void* ptrStringInfo2){
         strInd1--;
         strInd2--;
         // Search for next not punctuation and spaces in strings
-        while(!isalpha(str1[strInd1]) && strInd1 >= 0) strInd1--;
-        while(!isalpha(str2[strInd2]) && strInd2 >= 0) strInd2--;
+        while(!isalpha(str1[strInd1]) && strInd1 > 0) strInd1--;
+        while(!isalpha(str2[strInd2]) && strInd2 > 0) strInd2--;
     }
 
     if (strInd1 < 0 && strInd2 < 0) return 0;
@@ -305,7 +355,56 @@ int compareRightToLeft(const void* ptrStringInfo1, const void* ptrStringInfo2){
 
 }
 
+elStatus partition(stringInfo* massive, size_t length, size_t left,
+                        size_t right, const size_t middle, int (*compare)(const void*, const void*))
+{
+    /*
+        Function: Dividing the array into two parts, where the left part is less than middleEl
+                    and the right part is greater
+        Returns: (structure el_status) structure: left and right elements
+    */
 
+    assert(massive);
+
+    const stringInfo middleEl = massive[middle];
+
+    while(left <= right){
+        while(compare(&massive[left], &middleEl) < 0) left++;
+        while(compare(&middleEl, &massive[right]) < 0) right--;
+
+        if(left <= right){
+            swapLinesInfo(&massive[left], &massive[right]);
+
+            left++;
+            if(right > 0) right--;
+        }
+
+    }
+    return elStatus {.left = left, .right = right};
+
+}
+
+void quickSort(stringInfo* massive, size_t length, const size_t leftEdge, const size_t rightEdge,
+                            int (*compare)(const void*, const void*)){
+    /*
+        Function: Quick sort
+        Returns: void
+    */
+    assert(massive);
+
+    if(length == 0){
+        printf("%s", "An empty array has been passed");
+        return;
+    }
+
+    size_t middle = (rightEdge + leftEdge) / 2;
+    elStatus edge = partition(massive, length, leftEdge, rightEdge, middle, compare);
+
+    if(edge.right > leftEdge) quickSort(massive, length, leftEdge, edge.right, compare);
+    if(rightEdge > edge.left) quickSort(massive, length, edge.left, rightEdge, compare);
+
+    return;
+}
 
 
 
