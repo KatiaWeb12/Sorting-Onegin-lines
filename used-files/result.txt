@@ -1,3 +1,4 @@
+
 ------- Part 1. My QuickSort from left to right
 
 
@@ -5323,6 +5324,7 @@ youthful heart with lies, With fiery praise… and heated
 youthful ravings and their blaze.
 youth to capture And slurp from salty shells those bites
 you (why should I dissemble?); But I am now another's
+
 ------- Part 2. Standard qsort from right to left
 
 And so I lived in old Odessa…
@@ -10648,6 +10650,7 @@ fresh and rosy tone That made her sister's beauty
 And I, who saw my single duty
 
 Again he'd done his moral duty,
+
 ------- Part 3. The original text of the poem
 
 Eugene Onegin by Alexander Pushkin

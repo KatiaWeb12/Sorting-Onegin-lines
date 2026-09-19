@@ -35,17 +35,19 @@ void writeStringsToFile(const char* fileName, stringInfo* stringsInfoMassive, si
 char* createMemoryBlock(size_t fileSize);
 void readTextIntoSingleBuffer(const char* fileName, char** text);
 void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], size_t stringCount);
-void calculateStringsSizes(char* text, stringInfo stringsInfoMassive[], size_t stringsCount);
+void calculateStringsSizes(stringInfo stringsInfoMassive[], size_t stringsCount);
 void setStringsInfo(char* text, stringInfo stringsInfoMassive[], size_t stringsCount);
 void swapLinesInfo(stringInfo* strInfo1, stringInfo* strInfo2);
 int compareLeftToRight(const void* ptrLine1, const void* ptrLine2);
 int compareRightToLeft(const void* ptrLine1, const void* ptrLine2);
-elStatus partition(stringInfo* massive, size_t length, size_t left,
+elStatus partition(stringInfo* massive, size_t left,
                         size_t right, const size_t middle, int (*compare)(const void*, const void*));
 void quickSort(stringInfo* massive, size_t length, const size_t leftEdge, const size_t rightEdge,
                             int (*compare)(const void*, const void*));
 
 int main(){
+    // Cancel buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
 
     // Set the file names
     struct files usedFiles = {};
@@ -63,7 +65,6 @@ int main(){
 
     // Clean resultFile
     cleanFile(usedFiles.resultFile);
-
 
     // Read the text from the file and set information about it
     readTextIntoSingleBuffer(usedFiles.oneginFile, &text);
@@ -215,7 +216,7 @@ void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], size_t string
     return;
 }
 
-void calculateStringsSizes(char* text, stringInfo stringsInfoMassive[], size_t stringsCount){
+void calculateStringsSizes(stringInfo stringsInfoMassive[], size_t stringsCount){
     /*
         Function: calculate sizes of strings and record them into structure
         Returns: void
@@ -239,7 +240,7 @@ void setStringsInfo(char* text, stringInfo stringsInfoMassive[], size_t stringsC
     */
 
     recordPtrStrings(text, stringsInfoMassive, stringsCount);
-    calculateStringsSizes(text, stringsInfoMassive, stringsCount);
+    calculateStringsSizes(stringsInfoMassive, stringsCount);
 
     return;
 }
@@ -355,7 +356,7 @@ int compareRightToLeft(const void* ptrStringInfo1, const void* ptrStringInfo2){
 
 }
 
-elStatus partition(stringInfo* massive, size_t length, size_t left,
+elStatus partition(stringInfo* massive, size_t left,
                         size_t right, const size_t middle, int (*compare)(const void*, const void*))
 {
     /*
@@ -398,7 +399,7 @@ void quickSort(stringInfo* massive, size_t length, const size_t leftEdge, const 
     }
 
     size_t middle = (rightEdge + leftEdge) / 2;
-    elStatus edge = partition(massive, length, leftEdge, rightEdge, middle, compare);
+    elStatus edge = partition(massive, leftEdge, rightEdge, middle, compare);
 
     if(edge.right > leftEdge) quickSort(massive, length, leftEdge, edge.right, compare);
     if(rightEdge > edge.left) quickSort(massive, length, edge.left, rightEdge, compare);
