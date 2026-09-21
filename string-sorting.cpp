@@ -222,7 +222,7 @@ void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t 
 size_t calculateStringsCount(const char* text){
     /*
         Function: calculate count of strings
-        Returns: void
+        Returns: (size_t) count of strings
     */
 
     size_t stringCount = 0;
