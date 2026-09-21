@@ -10,7 +10,6 @@
 
 // Structure for storing filenames
 struct files {
-        const char* logFile;
         const char* testFile;
         const char* oneginFile;
         const char* resultFile;
@@ -34,9 +33,11 @@ void writeTextToFile(const char* fileName, char* text, size_t stringCount, const
 void writeStringsToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason);
 char* createMemoryBlock(size_t fileSize);
 void readTextIntoSingleBuffer(const char* fileName, char** text);
-void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], size_t stringCount);
+void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t stringCount);
 void calculateStringsSizes(stringInfo stringsInfoMassive[], size_t stringsCount);
+size_t calculateStringsCount(const char* text);
 void setStringsInfo(char* text, stringInfo stringsInfoMassive[], size_t stringsCount);
+
 void swapLinesInfo(stringInfo* strInfo1, stringInfo* strInfo2);
 int compareLeftToRight(const void* ptrLine1, const void* ptrLine2);
 int compareRightToLeft(const void* ptrLine1, const void* ptrLine2);
@@ -51,7 +52,6 @@ int main(){
 
     // Set the file names
     struct files usedFiles = {};
-    usedFiles.logFile = "log-files/log.txt";
     usedFiles.testFile = "used-files/test.txt";
     usedFiles.oneginFile = "used-files/onegin.txt";
     usedFiles.resultFile = "used-files/result.txt";
@@ -59,15 +59,17 @@ int main(){
     // Variable to store the text of the entire poem
     char* text = NULL;
 
-    // Variable to store information about every string in poem
-    const size_t stringsCount = 5323;
-    stringInfo stringsInfoMassive[stringsCount] = {};
-
     // Clean resultFile
     cleanFile(usedFiles.resultFile);
 
-    // Read the text from the file and set information about it
+    // Read the text from the file
     readTextIntoSingleBuffer(usedFiles.oneginFile, &text);
+    size_t stringsCount = calculateStringsCount(text);
+
+    // Set information about the text
+    stringInfo* stringsInfoMassive = (stringInfo*)calloc(stringsCount, sizeof(stringInfo));
+    assert(stringsInfoMassive);
+    //printf("%u",stringsCount);
     setStringsInfo(text, stringsInfoMassive, stringsCount);
 
     // My QuickSort from left to right
@@ -82,6 +84,7 @@ int main(){
     writeTextToFile(usedFiles.resultFile, text, stringsCount, "------- Part 3. The original text of the poem");
 
     //Memory deallocation
+    free(stringsInfoMassive);
     free(text);
 
     return 0;
@@ -191,7 +194,7 @@ void readTextIntoSingleBuffer(const char* fileName, char** text){
     fclose(file);
 }
 
-void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], size_t stringCount){
+void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t stringCount){
     /*
         Function: Record pointer about each line
         Returns: void
@@ -216,6 +219,25 @@ void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], size_t string
     return;
 }
 
+size_t calculateStringsCount(const char* text){
+    /*
+        Function: calculate count of strings
+        Returns: void
+    */
+
+    size_t stringCount = 0;
+    const char* symbolPtr = text;
+    // Calculate count of strings in buffer
+    while(*symbolPtr){
+        if(*symbolPtr == '\n'){
+            stringCount++;
+        }
+        symbolPtr++;
+    }
+
+    return stringCount;
+}
+
 void calculateStringsSizes(stringInfo stringsInfoMassive[], size_t stringsCount){
     /*
         Function: calculate sizes of strings and record them into structure
@@ -238,7 +260,6 @@ void setStringsInfo(char* text, stringInfo stringsInfoMassive[], size_t stringsC
         Function: Establish information about the lines of the poem
         Returns: void
     */
-
     recordPtrStrings(text, stringsInfoMassive, stringsCount);
     calculateStringsSizes(stringsInfoMassive, stringsCount);
 
