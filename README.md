@@ -20,6 +20,12 @@ Standard input and output buffering has also been disabled. At the end of the pr
 ### quickSort
 My function of quick sorting massive of strings implemented recursively. It returns structure. It uses function "partition" for division elements for current middle element. The algorithm is standard.
 
+### Assembling
+
+The code compiles using standard compilers:
+g++ string-sorting.cpp -o string-sorting.exe
+
+Run via .\string-sorting.exe
 
 
 
