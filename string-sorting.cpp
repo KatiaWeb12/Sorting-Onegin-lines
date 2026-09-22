@@ -2,11 +2,9 @@
 #include <stdio.h>
 #include <assert.h>
 #include <sys/stat.h>
-#include <math.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <direct.h>
 
 // Structure for storing filenames
 struct files {
