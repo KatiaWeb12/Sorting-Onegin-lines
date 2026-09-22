@@ -17,4 +17,8 @@ The original version of Pushkin’s poem is displayed.
 
 Standard input and output buffering has also been disabled. At the end of the program, the dynamically allocated memory is freed.
 
+#### quickSort
+My function of quick sorting massive of strings implemented recursively. It returns structure. It uses function "partition" for division elements for current middle element.
+
+
 
