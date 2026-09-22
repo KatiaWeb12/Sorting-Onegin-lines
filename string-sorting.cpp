@@ -35,7 +35,6 @@ void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t 
 void calculateStringsSizes(stringInfo stringsInfoMassive[], size_t stringsCount);
 size_t calculateStringsCount(const char* text);
 void setStringsInfo(char* text, stringInfo stringsInfoMassive[], size_t stringsCount);
-
 void swapLinesInfo(stringInfo* strInfo1, stringInfo* strInfo2);
 int compareLeftToRight(const void* ptrLine1, const void* ptrLine2);
 int compareRightToLeft(const void* ptrLine1, const void* ptrLine2);
@@ -108,7 +107,7 @@ void writeTextToFile(const char* fileName, char* text, size_t stringCount, const
     assert(file);
 
     // Write of the reason/title
-    fprintf(file, "\n%s\n\n", reason);
+    fprintf(file, "%s\n\n", reason);
 
     /*
         Function: Record pointer about each line
@@ -144,7 +143,7 @@ void writeStringsToFile(const char* fileName, stringInfo* stringsInfoMassive, si
     assert(file);
 
     // Write of the reason/title
-    fprintf(file, "\n%s\n\n", reason);
+    fprintf(file, "%s\n\n", reason);
 
     // Write text to a file line by line
     for (size_t i = 0; i < length; i++)
