@@ -202,7 +202,7 @@ void writeStringsToFile(const char* fileName, stringInfo* stringsInfoMassive, si
     assert(file);
 
     // Write of the reason/title
-    fprintf(file, "%s\n\n", reason);
+    fprintf(file, "%s\n", reason);
 
     // Write text to a file line by line
     for (size_t i = 0; i < length; i++)
@@ -258,7 +258,7 @@ void readText(files usedFiles, codeInfo* mainInfo){
     return;
 }
 
-void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t stringCount){//TODO находить длинну прямо тут
+void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t stringCount){
     /*
         Function: Record pointer about each line
         Returns: void
@@ -270,14 +270,15 @@ void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t 
     while(currentPtr != NULL && stringIndex < stringCount){
         // Record string pointer
         stringsInfoMassive[stringIndex].stringPtr = currentPtr;
-        stringIndex++;
 
         // Get new string pointer
         char* newString = strchr(currentPtr, '\n');
         if(newString == NULL) break;
+        stringsInfoMassive[stringIndex].stringSize = newString - currentPtr;
 
         currentPtr = newString + 1;
         *newString = '\0';
+        stringIndex++;
     }
 
     return;
@@ -325,7 +326,7 @@ void setStringsInfo(char* text, stringInfo stringsInfoMassive[], size_t stringsC
         Returns: void
     */
     recordPtrStrings(text, stringsInfoMassive, stringsCount);
-    calculateStringsSizes(stringsInfoMassive, stringsCount);
+    //calculateStringsSizes(stringsInfoMassive, stringsCount);
 
     return;
 }
@@ -413,13 +414,9 @@ int compareRightToLeft(const void* ptrStringInfo1, const void* ptrStringInfo2){
     const char* str1 = (*strInfo1).stringPtr;
     const char* str2 = (*strInfo2).stringPtr;
 
-    // Indexes of string symbols
-    int strInd1 = 0;
-    int strInd2 = 0;
-
-    // Reach the end of the strins
-    while(str1[strInd1+1] != '\0') strInd1++;//TODO += длина в структуре
-    while(str2[strInd2+1] != '\0') strInd2++;
+    // Indexes of last string symbols
+    int strInd1 = strInfo1->stringSize - 1;
+    int strInd2 = strInfo2->stringSize - 1;
 
     // Search for not punctuation and spaces in strings
     while(!isalpha(str1[strInd1]) && strInd1 > 0) strInd1--;

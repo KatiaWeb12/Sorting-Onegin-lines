@@ -17,16 +17,42 @@ The original version of Pushkin’s poem is displayed.
 
 Standard input and output buffering has also been disabled. At the end of the program, the dynamically allocated memory is freed.
 
-### quickSort
+
+## Assembling
+
+The code compiles using standard compilers
+```bash
+g++ string-sorting.cpp -o string-sorting.exe
+```
+
+Run via
+```bash
+.\string-sorting.exe onegin.txt result.txt
+```
+
+## Features that were added after the review:
+1. Create a general structure for the main data +
+2. Remove cleanFile and delete the file using unlink +
+3. It would be better to break it down into functions: clearing dynamic memory, etc. +
+4. Implement input of file names from the console +
+
+
+## quickSort
 My function of quick sorting massive of strings implemented recursively. It returns structure. It uses function "partition" for division elements for current middle element. The algorithm is standard.
 
-### Assembling
+## Example of work
+Test-file
+```bash
+brebebeqrg
 
-The code compiles using standard compilers:
-g++ string-sorting.cpp -o string-sorting.exe
+btwebrqe
 
-Run via .\string-sorting.exe
+afsagsa
 
+kuylutlg
+
+ykum,,h
+```
 
 
 
