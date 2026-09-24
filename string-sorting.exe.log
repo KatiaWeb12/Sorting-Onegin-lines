@@ -1358,3 +1358,450 @@ Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-s
 Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
 
 --------------------------------------------------
+
+--------------------------------------------------
+TXLib предупреждает:
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x757DE740 в функции strlen(). Попытка прочесть данные по адресу 0x8F001B00 в модуле C:\WINDOWS\System32\msvcrt.dll. Спасибо _txUnhandledExceptionFilter(), что сообщил. Люблю его <3
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x48CC (Main), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x757DE740 in C:\WINDOWS\System32\msvcrt.dll: strlen()
+# 1 0x0041EF0A in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: setStringsInfo()
+# 2 0x0041E95E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 22 2026 15:58:18, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 22 2026 15:58:22
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (11, 0x00): SIGSEGV: Доступ по неверному указателю. Ставьте ассерты! 
+
+Нарушение доступа к памяти.
+
+#1: Исключение EXCEPTION_ACCESS_VIOLATION (0xC0000005) при выполнении кода по адресу 0x757DE740 в функции strlen(). Попытка прочесть данные по адресу 0x8F001B00 в модуле C:\WINDOWS\System32\msvcrt.dll. Спасибо _txUnhandledExceptionFilter(), что сообщил. Люблю его <3
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#2: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x48CC (Main), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x757DE740 in C:\WINDOWS\System32\msvcrt.dll: strlen()
+# 1 0x0041EF0A in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: setStringsInfo()
+# 2 0x0041E95E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 22 2026 15:58:18, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 22 2026 15:58:22
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x6EEC (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EE2E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EEAE in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E91A in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 22 2026 16:58:53, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 22 2026 19:38:29
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x6738 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EE2E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EEAE in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E91A in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 22 2026 16:58:53, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 22 2026 19:39:02
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x33F4 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EE9E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EF24 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E939 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 24 2026 15:09:29, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 24 2026 15:09:39
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x624C (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EE9E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EF24 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E939 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 24 2026 15:11:11, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 24 2026 15:11:14
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x2B70 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EEE1 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EF67 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E939 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 24 2026 15:15:03, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 24 2026 15:15:07
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x6790 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EEE8 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EF6E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E939 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 24 2026 15:20:41, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 24 2026 15:20:45
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x7014 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EEE8 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EF6E in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E939 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 24 2026 15:21:03, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 24 2026 15:21:06
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x44AC (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EEFF in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EF85 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E939 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 24 2026 15:24:08, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 24 2026 15:24:11
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------
+
+--------------------------------------------------
+TXLib соболезнует...
+
+Программа: C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe,
+
+ВНЕЗАПНО: signal (22, 0x00): SIGABRT: Аварийное завершение программы, вызвана функция abort(). 
+
+С помощью функции signal() вы можете сами обработать эту ошибку.
+
+#1: TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400], Instance: 0x004F71DC (32-bit), Flags: Cmdre0, Thread: 0x1B80 (Main), GetLastError(): 2 (Не удается найти указанный файл), errno: 2 (No such file or directory), _doserrno: 2 (No such file or directory). 
+
+--------------------------------------------------
+Стек вызовов:
+
+# 0 0x0040B361 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: (anonymous namespace)::TX::_txOnSignal()
+# 1 0x757A8F03 in C:\WINDOWS\System32\msvcrt.dll: raise()
+# 2 0x757AD3CB in C:\WINDOWS\System32\msvcrt.dll: abort()
+# 3 0x757A9D47 in C:\WINDOWS\System32\msvcrt.dll: assert()
+# 4 0x0041EF07 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readTextIntoSingleBuffer()
+# 5 0x0041EF8D in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: readText()
+# 6 0x0041E939 in C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe: main()
+
+TXLib печалится: Нет информации об исходных файлах. Вы не забыли опцию -g при компиляции?
+
+--------------------------------------------------
+Developed with:
+
+The Dumb Artist Library (TX Library)
+TXLib [Ver: 00173a, Rev: 175, Date: 2025-12-31 23:02:50 +0400]
+Copyright (C) Ded (Ilya Dedinsky, http://txlib.ru) <mail@txlib.ru>
+See license on: http://txlib.ru
+
+TXLib file:	C:\Users\Kate\Desktop\downloads\TX\TXLib.h
+Compiled:	Sep 24 2026 15:24:40, GNU g++ 4.8.1, std=201103L, MinGW Runtime 3.20, 32-bit, Debug
+Started:	Sep 24 2026 15:24:43
+
+Run file:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting\string-sorting.exe
+Directory:	C:\Users\Kate\Desktop\Дединский СИ Tasks\Task4 string sorting
+
+--------------------------------------------------

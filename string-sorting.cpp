@@ -5,12 +5,15 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <unistd.h>
+
+const size_t MAX_PATH_LENGTH = 300;
 
 // Structure for storing filenames
 struct files {
-        const char* testFile;
-        const char* oneginFile;
-        const char* resultFile;
+        char path[MAX_PATH_LENGTH];
+        char inputFile[MAX_PATH_LENGTH];
+        char resultFile[MAX_PATH_LENGTH];
     };
 
 // A structure for storing information about a string
@@ -25,8 +28,19 @@ struct elStatus {
     size_t right;
     };
 
+struct codeInfo {
+    size_t stringsCount;
+    char* textOfEntirePoem;
+    stringInfo* stringsInfoMassive;
+};
+
 // Prototypes
+void deletingResultFile(const char* fileName);
+void cancelBuffering();
+void setFileNames(struct files* usedFiles, const size_t maxPathLength, int argc, char* argv[]);
+void memoryDeallocation(char* text, stringInfo* stringsInfoMassive);
 void cleanFile(const char* fileName);
+void readText(files usedFiles, codeInfo* mainInfo);
 void writeTextToFile(const char* fileName, char* text, size_t stringCount, const char* reason);
 void writeStringsToFile(const char* fileName, stringInfo* stringsInfoMassive, size_t length, const char* reason);
 char* createMemoryBlock(size_t fileSize);
@@ -43,48 +57,93 @@ elStatus partition(stringInfo* massive, size_t left,
 void quickSort(stringInfo* massive, size_t length, const size_t leftEdge, const size_t rightEdge,
                             int (*compare)(const void*, const void*));
 
-int main(){
-    // Cancel buffering
-    setvbuf(stdout, NULL, _IONBF, 0);
+int main(int argc, char* argv[]){
+    cancelBuffering();
 
-    // Set the file names
     struct files usedFiles = {};
-    usedFiles.testFile = "used-files/test.txt";
-    usedFiles.oneginFile = "used-files/onegin.txt";
-    usedFiles.resultFile = "used-files/result.txt";
+    setFileNames(&usedFiles, MAX_PATH_LENGTH, argc, argv);
 
-    // Variable to store the text of the entire poem
-    char* text = NULL;
-
-    // Clean resultFile
-    cleanFile(usedFiles.resultFile);
+    struct codeInfo mainInfo = {};
+    mainInfo.textOfEntirePoem = NULL;
+    deletingResultFile(usedFiles.resultFile);
 
     // Read the text from the file
-    readTextIntoSingleBuffer(usedFiles.oneginFile, &text);
-    size_t stringsCount = calculateStringsCount(text);
+    readText(usedFiles, &mainInfo);
 
-    // Set information about the text
-    stringInfo* stringsInfoMassive = (stringInfo*)calloc(stringsCount, sizeof(stringInfo));
-    assert(stringsInfoMassive);
-    //printf("%u",stringsCount);
-    setStringsInfo(text, stringsInfoMassive, stringsCount);
+    // Set information about the textOfEntirePoem
+    mainInfo.stringsInfoMassive = (stringInfo*)calloc(mainInfo.stringsCount, sizeof(stringInfo));
+    assert(mainInfo.stringsInfoMassive);
+
+    setStringsInfo(mainInfo.textOfEntirePoem, mainInfo.stringsInfoMassive, mainInfo.stringsCount);
 
     // My QuickSort from left to right
-    quickSort(stringsInfoMassive, stringsCount, 0, stringsCount-1, compareLeftToRight);
-    writeStringsToFile(usedFiles.resultFile, stringsInfoMassive, stringsCount, "------- Part 1. My QuickSort from left to right");
+    quickSort(mainInfo.stringsInfoMassive, mainInfo.stringsCount, 0, mainInfo.stringsCount-1, compareLeftToRight);
+    writeStringsToFile(usedFiles.resultFile, mainInfo.stringsInfoMassive, mainInfo.stringsCount,
+                       "------- Part 1. My QuickSort from left to right");
 
     // Standard QSORT from right to left
-    qsort(stringsInfoMassive, stringsCount, sizeof(stringInfo), compareRightToLeft);
-    writeStringsToFile(usedFiles.resultFile, stringsInfoMassive, stringsCount, "------- Part 2. Standard qsort from right to left");
+    qsort(mainInfo.stringsInfoMassive, mainInfo.stringsCount, sizeof(stringInfo), compareRightToLeft);
+    writeStringsToFile(usedFiles.resultFile, mainInfo.stringsInfoMassive, mainInfo.stringsCount,
+                      "------- Part 2. Standard qsort from right to left");
 
     // The original text of the poem
-    writeTextToFile(usedFiles.resultFile, text, stringsCount, "------- Part 3. The original text of the poem");
+    writeTextToFile(usedFiles.resultFile, mainInfo.textOfEntirePoem, mainInfo.stringsCount,
+                    "------- Part 3. The original text of the poem");
 
-    //Memory deallocation
-    free(stringsInfoMassive);
-    free(text);
+    memoryDeallocation(mainInfo.textOfEntirePoem, mainInfo.stringsInfoMassive);
 
     return 0;
+}
+
+void setFileNames(struct files* usedFiles, const size_t maxPathLength, int argc, char* argv[]){
+
+    if(argc != 3){
+        printf("Input-Error");
+        printf("%s %u %s", "Type: path, input file, output file.\nPaths must be no longer than ",
+                            maxPathLength, "characters.\n");
+        exit(1);
+    }
+
+    const char* PATH = "./used-files/";
+
+    strncpy(usedFiles->path, PATH, maxPathLength);
+    usedFiles->path[maxPathLength - 1] = '\0';
+
+    strncpy(usedFiles->inputFile, usedFiles->path, maxPathLength);
+    usedFiles->inputFile[maxPathLength - 1] = '\0';
+    strncat(usedFiles->inputFile, argv[1], maxPathLength);
+
+    strncpy(usedFiles->resultFile, usedFiles->path, maxPathLength);
+    usedFiles->resultFile[maxPathLength - 1] = '\0';
+    strncat(usedFiles->resultFile, argv[2], maxPathLength);
+
+    printf("Path:        [%s]\n", usedFiles->path);
+    printf("Input file:  [%s]\n", usedFiles->inputFile);
+    printf("Result file: [%s]\n", usedFiles->resultFile);
+
+    return;
+}
+
+
+void deletingResultFile(const char* fileName){
+    int codeOfDeleting = unlink(fileName);
+    if(codeOfDeleting < 0){
+        printf("File '%s' does not exists", fileName);
+    }
+    return;
+}
+
+void cancelBuffering(){
+
+    // Abandoning standard buffering since a custom buffer already exists.
+    setvbuf(stdout, NULL, _IONBF, 0);
+
+    return;
+}
+
+void memoryDeallocation(char* text, stringInfo* stringsInfoMassive){
+    free(stringsInfoMassive);
+    free(text);
 }
 
 void cleanFile(const char* fileName){
@@ -118,7 +177,7 @@ void writeTextToFile(const char* fileName, char* text, size_t stringCount, const
     char* currentPtr = text;
 
     while(currentPtr != NULL && stringIndex < stringCount){
-        fprintf(file, "%s\n", currentPtr);;
+        fprintf(file, "%s\n", currentPtr);//TODO fwrite
         stringIndex++;
 
         // Get new string pointer
@@ -191,7 +250,15 @@ void readTextIntoSingleBuffer(const char* fileName, char** text){
     fclose(file);
 }
 
-void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t stringCount){
+void readText(files usedFiles, codeInfo* mainInfo){
+
+    readTextIntoSingleBuffer(usedFiles.inputFile, &(mainInfo->textOfEntirePoem));
+    mainInfo->stringsCount = calculateStringsCount(mainInfo->textOfEntirePoem);
+
+    return;
+}
+
+void recordPtrStrings(char* text, stringInfo stringsInfoMassive[], const size_t stringCount){//TODO находить длинну прямо тут
     /*
         Function: Record pointer about each line
         Returns: void
@@ -351,7 +418,7 @@ int compareRightToLeft(const void* ptrStringInfo1, const void* ptrStringInfo2){
     int strInd2 = 0;
 
     // Reach the end of the strins
-    while(str1[strInd1+1] != '\0') strInd1++;
+    while(str1[strInd1+1] != '\0') strInd1++;//TODO += длина в структуре
     while(str2[strInd2+1] != '\0') strInd2++;
 
     // Search for not punctuation and spaces in strings
